@@ -56,6 +56,7 @@
                                 </li>
                             </ul>
                         </template>
+
                         <template v-else>
                     <li class="el-submenu">
                         <div class="el-submenu__title el-menu-item"
@@ -63,7 +64,7 @@
                              :class="$route.path==item.children[0].path?'is-active':''"
                              @click="$router.push(item.children[0].path)"><i :class="item.iconCls"></i></div>
                     </li>
-</template>
+                        </template>
 </li>
 </ul>
 </aside>

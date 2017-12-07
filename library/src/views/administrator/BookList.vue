@@ -1,14 +1,14 @@
 <template>
     <section>
         <div>
-            <ul v-for="(item,index) in bookinfo" class="booklist">
+            <ul v-for="(item,index) in books" class="booklist">
                 <li  class="bookitem">
                     <div class="image-box">
-                        <img :src="item.src" alt="">
+                        <img src="https://img13.360buyimg.com/n1/s200x200_jfs/t3562/265/1153735603/36671/a287c81e/581d8914N19b0b756.jpg" alt="">
                     </div>
                     <div class="inline-box">
-                        <h2>{{item.name}}</h2>
-                        <p>简介：{{item.information}}</p>
+                        <h2>{{item.title}}</h2>
+                        <p>简介：Vue.js 是一套构建用户界面的渐进式框架。与其他重量级框架不同的是，Vue 采用自底向上增量开发的设计。Vue 的核心库只关注视图层，它不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与单文件组件和 Vue 生态系统支持的库结合使用时，Vue 也完全能够为复杂的单页应用程序提供驱动。</p>
                         <!--<span>被借{{item.send_time}}次</span>-->
                         <!--<span>借出时间：{{item.out_time}}</span>-->
                         <!--<span>归还时间：{{item.back_time}}</span>-->
@@ -28,43 +28,12 @@
 </template>
 
 <script>
-//    import jsonp from 'jsonp';
+    import jsonp from 'jsonp';
 import BookMessageSecret from './BookMessageSecret.vue'
     export default {
         data(){
             return{
-//                booklistId:[
-//                    1003078,1000104,7056972,17604305,4866934,3117898,3948354,3884108
-//                ]
-//                id:1003078,
-                bookinfo:[{
-                    src:'https://img13.360buyimg.com/n1/s200x200_jfs/t3562/265/1153735603/36671/a287c81e/581d8914N19b0b756.jpg',
-                    name:'vue.js指南',
-                    id:6548683,
-                    information:'Vue.js 是一套构建用户界面的渐进式框架。与其他重量级框架不同的是，Vue 采用自底向上增量开发的设计。Vue 的核心库只关注视图层，它不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与单文件组件和 Vue 生态系统支持的库结合使用时，Vue 也完全能够为复杂的单页应用程序提供驱动。',
-                    send_time:0,
-                    out_time:'2017-11-11 13:00',
-                    back_time:'2017-01-11 13:00',
-
-                },{
-                    src:'https://img13.360buyimg.com/n1/s200x200_jfs/t3562/265/1153735603/36671/a287c81e/581d8914N19b0b756.jpg',
-                    name:'vue.js指南',
-                    id:6548683,
-                    information:'Vue.js 是一套构建用户界面的渐进式框架。与其他重量级框架不同的是，Vue 采用自底向上增量开发的设计。Vue 的核心库只关注视图层，它不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与单文件组件和 Vue 生态系统支持的库结合使用时，Vue 也完全能够为复杂的单页应用程序提供驱动。',
-                    send_time:0,
-                    out_time:'2017-11-11 13:00',
-                    back_time:'2017-01-11 13:00',
-
-                },{
-                    src:'https://img13.360buyimg.com/n1/s200x200_jfs/t3562/265/1153735603/36671/a287c81e/581d8914N19b0b756.jpg',
-                    name:'vue.js指南',
-                    id:6548683,
-                    information:'Vue.js 是一套构建用户界面的渐进式框架。与其他重量级框架不同的是，Vue 采用自底向上增量开发的设计。Vue 的核心库只关注视图层，它不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与单文件组件和 Vue 生态系统支持的库结合使用时，Vue 也完全能够为复杂的单页应用程序提供驱动。',
-                    send_time:0,
-                    out_time:'2017-11-11 13:00',
-                    back_time:'2017-01-11 13:00',
-
-                }]
+                books:[],
             }
         },
         components:{
@@ -72,18 +41,15 @@ import BookMessageSecret from './BookMessageSecret.vue'
         },
         methods:{
           getBooklist(id){
-
-
-//              axios.get('https://api.douban.com/v2/book/'+id).then(function (res) {
-//                  console.log(res);
-//              })
-//              jsonp('https://api.douban.com/v2/book/'+id, null, function (err, data) {
-//                  if (err) {
-//                      console.error(err.message);
-//                  } else {
+            var _this = this;
+              jsonp('https://api.douban.com/v2/book/search?q=html&fields=id,title', null, function (err, data) {
+                  if (err) {
+                      console.error(err.message);
+                  } else {
 //                      console.log(data);
-//                  }
-//              });
+                      _this.books = data.books;
+                  }
+              });
           },
 
 

@@ -13,9 +13,18 @@ import routes from './routes'
 import Mock from './mock'
 Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+// Vue.prototype.$http = axios
+// Vue.prototype.HOST = '/api'
+
+// import jsonp from 'jsonp';
+// Vue.use(jsonp);
+
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
+Vue.use(VueAxios,axios)
 Vue.use(Vuex)
 
 //NProgress.configure({ showSpinner: false });

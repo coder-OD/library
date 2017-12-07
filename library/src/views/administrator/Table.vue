@@ -28,7 +28,7 @@
 			<el-table-column prop="age" label="年龄" width="100" sortable>
 			</el-table-column>
 			<!--<el-table-column prop="birth" label="生日" width="120" sortable>-->
-			</el-table-column>
+			<!--</el-table-column>-->
 			<el-table-column prop="mobile" label="账号" min-width="180" sortable>
 			</el-table-column>
 			<el-table-column label="操作" width="150">
@@ -203,7 +203,9 @@
 			},
 			//显示编辑界面
 			handleEdit: function (index, row) {
-				this.editFormVisible = true;
+//                console.log(index);
+//                console.log(row);
+                this.editFormVisible = true;
 				this.editForm = Object.assign({}, row);
 			},
 			//显示新增界面

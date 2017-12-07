@@ -36,7 +36,9 @@
             //{ validator: validaePass2 }
           ]
         },
-        checked: true
+        checked: true,
+          userlog:false,
+          adlog:false
       };
     },
     methods: {
@@ -73,9 +75,11 @@
                   if(data.user.username == 'user01'){
                       console.log(1);
                       this.$router.push({ path: '/userlogin' });
+                      this.userlog = true;
                       return;
                   }
                 this.$router.push({ path: '/userlist' });
+                  this.adlog = true;
               }
             });
           } else {
