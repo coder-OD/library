@@ -7,7 +7,8 @@ Vue.use(Vuex)
 
 // 应用初始状态
 const state = {
-    count: 10
+    count: 10,
+    // author:"杨晓帆",
 }
 
 // 定义所需的 mutations
@@ -17,13 +18,16 @@ const mutations = {
     },
     DECREMENT(state) {
         state.count--
-    }
+    },
+    // newAuthor(state,msg){
+    //     state.author = msg;
+    // }
 }
 
 // 创建 store 实例
 export default new Vuex.Store({
-    actions,
-    getters,
+    // actions,
+    // getters,
     state,
     mutations
 })

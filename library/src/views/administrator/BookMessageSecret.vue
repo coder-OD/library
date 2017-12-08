@@ -1,16 +1,21 @@
 <template>
     <div>
-        <span>被借{{this.send_time}}次</span>
-        <span>借出时间：{{this.out_time}}</span>
-        <span>归还时间：{{this.back_time}}</span>
-        <el-button type="danger" @click.native.prevent="handleDel(this.index)">下架</el-button>
+        <span>被借 <strong>{{count}}</strong>次</span>
+        <span v-if="isGot==true">
+                        <strong>已出馆</strong>
+            借出时间：<strong>{{curtime}}</strong>
+            归还时间：<strong>{{backtime}}</strong>
+        </span>
+        <span v-else><strong>已入藏</strong></span>
+        <el-button class="right-btn" type="danger" @click.native.prevent="handleDel(this.index)">下架{{this.id}}--{{this.index}}</el-button>
     </div>
 </template>
 
 <script>
+    import storejs from 'storejs';
 
     export default {
-        props:['send_time','out_time','back_time','index'],
+        props:['id','index'],
         methods:{
             handleDel: function (index) {
                 this.$confirm('确认下架这本书吗?', '提示', {
@@ -33,6 +38,38 @@
 //
 //                });
             },
+        },
+        data(){
+            return{
+                count: 0,
+                curtime:'',//当前时间
+                backtime:'',//归还时间
+                isGot:'',
+            }
+        },
+        created(){
+            //获取localstorage数据
+            var _this = this;
+            let storeName = storejs.get(_this.id);
+            storejs.forEach(function(key, val) {
+                if(_this.id == key){    //根据id来判断数据应该映射在哪本书上
+                    console.log(key, '==', val)
+                    _this.count = val.count;
+                    _this.curtime = val.curtime;
+                    _this.backtime = val.backtime;
+//                    _this.isGot = val.isGot;
+                }
+
+            })  // 遍历所有存储
+            //查看书是否借出
+            let isBookGot = storejs.get(_this.id+'book');
+            storejs.forEach(function(key, val) {
+                if((_this.id+'book') == key){    //根据id来判断数据应该映射在哪本书上
+                    console.log(key, '==', val)
+                    _this.isGot = val.isGot;
+                }
+
+            })  // 遍历所有存储
         }
     }
 </script>
@@ -46,4 +83,12 @@
         padding-right: 10px;
         font-size: 15px;
     }
+    strong{
+        color: #fb2d44;
+        padding-right: 10px;
+    }
+     .right-btn{
+         float: right;
+         margin-right: 20px;
+     }
 </style>

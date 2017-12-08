@@ -21,6 +21,10 @@ import VueAxios from 'vue-axios'
 // import jsonp from 'jsonp';
 // Vue.use(jsonp);
 
+// import moment from '../src/common/js/moment';
+// Vue.use(moment);
+
+
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)

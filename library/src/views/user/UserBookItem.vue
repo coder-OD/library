@@ -24,7 +24,16 @@
 
 <script>
 //    import axios from 'axios';
+//引入日期插件
+import moment from '../../../src/common/js/moment';
+moment.lang('zh-cn');
+import storejs from 'storejs';
+
+
+
+//Vue.use(moment);
 import jsonp from 'jsonp';
+import store from "../../vuex/store";
     export default {
         data(){
             return{
@@ -37,9 +46,13 @@ import jsonp from 'jsonp';
                     src:'',
                 },
                 isGot:false,
-
-
+                count:0,
+                curtime:'',//当前时间
+                backtime:'',//归还时间
             }
+        },
+        computed:{
+
         },
         methods:{
             getId(){
@@ -75,18 +88,47 @@ import jsonp from 'jsonp';
                 }).then(()=>{
                     console.log("我要借书");
                     this.isGot = !this.isGot
+                    this.count = this.count*1 +1;
 
+                    this.curtime = moment().format('ll');
+                    this.backtime =moment().add(60, 'days').calendar();
+                    //若点击确认按钮,此时记录当前书本{id:xxxx,curtime:'',backtime:'',count:num,isGot:bollean,}
+//                    console.log(this.book.id);   //string
+//                    console.log(this.count);     //number
+//                    console.log(this.curtime);   //string
+//                    console.log(this.backtime);  //string
+//                    console.log(this.isGot);     //boolean
+
+                    //将获取的数据设置到localstorage
+                    //为了识别每本书的记录, 将id作为localstorage的key值
+                    storejs.set(this.book.id,{
+                        count:this.count.toString(),
+                        curtime:this.curtime,
+                        backtime:this.backtime,
+
+
+                    });
+                    storejs.set(this.book.id+'book',{
+                        isGot:this.isGot,
+                    });
                 }).catch(() => {
-
+//                    console.log(1);
+                    return;
                 });
             },
             backBook(){
+
                 this.$confirm('确认归还吗?', '提示', {
                     type: 'warning'
                 }).then(()=>{
                     console.log("我要还书");
-                    this.isGot = !this.isGot
+                    this.isGot = !this.isGot;
 
+                    //需要单独修改localstorage中的isGot
+
+                    storejs.set(this.book.id+'book',{
+                        isGot: this.isGot,
+                    });
                 }).catch(() => {
 
                 });
@@ -97,6 +139,14 @@ import jsonp from 'jsonp';
             this.getId();
             //获取图书数据
             this.getData();
+            //将获取的数据设置到localstorage
+//            storejs('yxf',this.count.toString());
+//            let storeName = storejs.get(this.id);
+
+                this.count = storejs.get(this.book.id).count || 0;
+                this.isGot = storejs.get(this.book.id+'book').isGot || false;
+//            console.log(this.book.id);
+//            console.log(storejs.get(this.id).count);
         }
     }
 </script>
