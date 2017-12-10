@@ -129,6 +129,7 @@ import store from "../../vuex/store";
                     storejs.set(this.book.id+'book',{
                         isGot: this.isGot,
                     });
+
                 }).catch(() => {
 
                 });
